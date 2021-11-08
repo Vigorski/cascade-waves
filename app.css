@@ -1,0 +1,53 @@
+main{
+  margin: 0 auto;
+  width: 80%;
+}
+
+h1{
+  text-align: center;
+}
+
+#container{
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #303030;
+}
+
+/* .cascade-primer {
+  perspective: 600px;
+} */
+
+.cascade-primer__tile {
+  fill: #433e42;
+  stroke: #666;
+}
+
+.active{
+  z-index: 3;
+  transform-style: preserve-3d;
+  transition: fill .8s;
+  
+  animation-name: glow;
+  animation-duration: .8s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes glow {
+  0% {
+      stroke: #666;
+      transform: rotateX(0);
+      fill: #433e42;
+  }
+
+  50% {
+    stroke: #cd91ff;
+    transform: rotateX(180);
+    fill: #ac1bfa;
+  }
+
+  100% {
+      stroke: #666;
+      transform: rotateX(360deg);
+      fill: #433e42;
+  }
+}
