@@ -1,15 +1,20 @@
-class CascadePrimer {
+const requestAnimationFrame =
+	window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+// const cancelAnimationFrame =
+// 	window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+
+class CascadeWaves {
 	constructor(container, options = {}) {
 		const { columns, tileWidth, tileOffset, tileStrokeWidth } = options;
 
 		this.svg = 'http://www.w3.org/2000/svg';
-		this.columns = columns ?? 15;
+		this.columns = columns ?? 40;
 		this.tileState = new Array();
 		this.tileWidth = tileWidth ?? 1;
 		this.tileOffset = tileOffset ?? this.tileWidth / 2;
 		this.tileStrokeWidth = tileStrokeWidth ?? this.tileWidth / 20;
 		this.baseSVG = this.createBaseSVG();
-		this.allTiles = this.baseSVG.querySelectorAll('.cascade-primer__tile');
+		this.allTiles = this.baseSVG.querySelectorAll('.cascade-waves__tile');
 
 		this.init();
 	}
@@ -22,11 +27,11 @@ class CascadePrimer {
 		baseSVG.setAttribute('width', '100%');
 		// baseSVG.setAttribute('height', this.wrapperWidth);
 		baseSVG.setAttribute('viewBox', `-${this.tileOffset} -${this.tileOffset} ${this.columns} ${this.columns}`);
-		baseSVG.setAttribute('class', 'cascade-primer');
+		baseSVG.setAttribute('class', 'cascade-waves');
 
 		// create tiles wrapper
 		const tilesWrapper = document.createElementNS(this.svg, 'g');
-		tilesWrapper.setAttribute('class', 'cascade-primer__tiles');
+		tilesWrapper.setAttribute('class', 'cascade-waves__tiles');
 
 		// gennerate all tiles
 		for (let y = 0; y < this.columns; y++) {
@@ -45,7 +50,7 @@ class CascadePrimer {
 	createTile(x, y) {
 		const rectGroup = document.createElementNS(this.svg, 'g');
 		rectGroup.setAttributeNS(null, 'transform', `translate(${x}, ${y})`);
-		rectGroup.setAttribute('class', 'cascade-primer__tile');
+		rectGroup.setAttribute('class', 'cascade-waves__tile');
 		rectGroup.dataset.pos = [x, y];
 
 		const rect = document.createElementNS(this.svg, 'rect');
@@ -63,14 +68,15 @@ class CascadePrimer {
 		this.setTileState(x, y, rect);
 
 		//set events for tile
-		rectGroup.addEventListener('click', (e) => {
+		rect.addEventListener('click', () => {
 			const center = { x: x, y: y };
-			e.target.classList.add('active');
-			//this.incrementWaveRadius(center);
-			this.cycleThroughtTiles(center, 2.5);
+			const increment = this.incrementWaveRadius(center);
+			requestAnimationFrame(() => increment());
+
+			//this.cycleThroughtTiles(center, 6.5);
 		});
 
-		rectGroup.addEventListener('animationend', (e) => {
+		rect.addEventListener('animationend', (e) => {
 			e.target.classList.remove('active');
 		});
 
@@ -90,32 +96,83 @@ class CascadePrimer {
 	}
 
 	// c = center, r = radius
-	incrementWaveRadius(center, incrementBy = 0.5, duration = 20) {
-		let r = 0;
-		let increment = setInterval(() => {
-			r += incrementBy;
-			this.cycleThroughtTiles(center, r);
 
-			// if r grows half more than current columns, stop wave
-			if(r > this.columns + (this.columns/2)) {
-				clearInterval(increment);
-			}
-		}, duration);
+	incrementWaveRadius(c, incrementBy = 0.5) {
+		const _this = this;
+		let waveRadius = 0;
+
+		return function increment(center = c) {
+			waveRadius += incrementBy;
+			_this.cycleThroughtTiles(center, waveRadius);
+
+			// if r grows half more than current columns, stop wave iteration
+			if(waveRadius > _this.columns + (_this.columns/2)) return;
+			
+			requestAnimationFrame(() => increment());
+		};
 	}
 
 	cycleThroughtTiles(c, r) {
-		const top = Math.floor(c.y - r);
-		const bottom = Math.ceil(c.y + r);
-		const left = Math.floor(c.x - r);
-		const right = Math.ceil(c.x + r);
+		//////////////////////////////////////
+		// First version - select all tiles inside circle
+		//////////////////////////////////////
+		// const top = Math.ceil(c.y - r);
+		// 	const bottom = Math.floor(c.y + r);
+		// 	const left = Math.floor(c.x - r);
+		// 	const right = Math.ceil(c.x + r);
 
-		for (let x = left; x <= right; x++) {
-			for (let y = top; y <= bottom; y++) {
-				const tilePos = { x: x, y: y };
-				if (this.insideRadius(c, tilePos, r) && !!this.tileState[y] && !!this.tileState[y][x]) {
-					this.tileState[y][x].element.classList.add('active');
-				}
-			}
+		// 	for (let x = left; x <= right; x++) {
+		// 		for (let y = top; y <= bottom; y++) {
+		// 			const tilePos = { x: x, y: y };
+		// 			if (this.insideRadius(c, tilePos, r) && !!this.tileState[y] && !!this.tileState[y][x]) {
+		// 				this.tileState[y][x].element.classList.add('active');
+		// 			}
+		// 		}
+		// 	}
+
+		//////////////////////////////////////
+		// Second version - select only outline of circle (missing tiles)
+		//////////////////////////////////////
+		// const top = Math.ceil(c.y - r);
+		// const bottom = Math.floor(c.y + r);
+
+		// for (let y = top; y <= bottom; y++) {
+		// 	const dy = y - c.y;
+		// 	const dx = Math.floor(Math.sqrt(r*r - dy*dy));
+		// 	const left = c.x - dx;
+		// 	const right = c.x + dx;
+
+		// 	if (!!this.tileState[y] && !!this.tileState[y][left]) {
+		// 		this.tileState[y][left].element.classList.add('active');
+		// 	}
+
+		// 	if (!!this.tileState[y] && !!this.tileState[y][right]) {
+		// 		this.tileState[y][right].element.classList.add('active');
+		// 	}
+		// }
+
+		//////////////////////////////////////
+		// Thrid version - select 8 tiles at a time at the outline of circle
+		//////////////////////////////////////
+		const maxIterations = Math.floor(r * Math.sqrt(0.5));
+
+		for (let y = 0; y <= maxIterations; y++) {
+			const x = Math.floor(Math.sqrt(r * r - y * y));
+
+			this.activateTile(c.y + y, c.x - x);
+			this.activateTile(c.y + y, c.x + x);
+			this.activateTile(c.y - y, c.x - x);
+			this.activateTile(c.y - y, c.x + x);
+			this.activateTile(c.y + x, c.x - y);
+			this.activateTile(c.y + x, c.x + y);
+			this.activateTile(c.y - x, c.x - y);
+			this.activateTile(c.y - x, c.x + y);
+		}
+	}
+
+	activateTile(y, x) {
+		if (!!this.tileState[y] && !!this.tileState[y][x]) {
+			this.tileState[y][x].element.classList.add('active');
 		}
 	}
 
@@ -123,30 +180,9 @@ class CascadePrimer {
 		const dx = c.x - tile.x;
 		const dy = c.y - tile.y;
 		const distance = Math.sqrt(dx * dx + dy * dy);
-		//console.log(distance)
 		return distance <= r;
 	}
 }
 
 const wrapper = document.getElementById('container');
-const tileSpinner = new CascadePrimer(wrapper);
-
-// console.log(tileSpinner);
-
-//////////////////////////////////////////////////////////////////////////////////////
-
-// boxCells.on('primed', function (e) {
-// 	if (e.detail) {
-// 		triggerPrimedBoxes(this);
-// 	}
-// });
-
-// boxCells.on('webkitanimationend mozanimationend animationend', function () {
-// 	$(this).removeClass('box--active');
-// 	this.dispatchEvent(new CustomEvent('primed', { detail: false }));
-// });
-
-// boxCells.on('click', function () {
-// 	this.dispatchEvent(new CustomEvent('primed', { detail: true }));
-// 	$(this).addClass('box--active');
-// });
+const tileSpinner = new CascadeWaves(wrapper);

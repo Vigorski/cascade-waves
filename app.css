@@ -13,11 +13,11 @@ h1{
   background-color: #303030;
 }
 
-/* .cascade-primer {
+/* .cascade-waves {
   perspective: 600px;
 } */
 
-.cascade-primer__tile {
+.cascade-waves__tile {
   fill: #433e42;
   stroke: #666;
 }
@@ -25,29 +25,29 @@ h1{
 .active{
   z-index: 3;
   transform-style: preserve-3d;
-  transition: fill .8s;
+  transition: fill .6s;
   
   animation-name: glow;
-  animation-duration: .8s;
+  animation-duration: .6s;
   animation-timing-function: ease-in-out;
 }
 
 @keyframes glow {
   0% {
-      stroke: #666;
-      transform: rotateX(0);
-      fill: #433e42;
+    stroke: #666;
+    transform: rotateX(0);
+    fill: #433e42;
   }
 
   50% {
     stroke: #cd91ff;
-    transform: rotateX(180);
+    transform: rotateX(90);
     fill: #ac1bfa;
   }
 
   100% {
-      stroke: #666;
-      transform: rotateX(360deg);
-      fill: #433e42;
+    stroke: #666;
+    transform: rotateX(180deg);
+    fill: #433e42;
   }
 }
