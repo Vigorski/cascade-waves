@@ -1,3 +1,7 @@
+body {
+  font: 16px "Arial", sans-serif;
+}
+
 main {
   margin: 0 auto;
   width: 80%;
@@ -36,7 +40,7 @@ h1 {
   
   /* animation-name: spin; */
   animation-name: colors, beat;
-  animation-duration: .4s;
+  animation-duration: .5s;
   animation-timing-function: ease-in-out;
 }
 
