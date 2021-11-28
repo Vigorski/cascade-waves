@@ -1,0 +1,11 @@
+.playground {
+  background-color: $color-white;
+  margin-top: calc-rem(48px);
+  box-shadow: 0 0 30px #e2d4ff;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}

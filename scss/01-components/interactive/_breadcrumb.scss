@@ -1,0 +1,30 @@
+.breadcrumbs {
+    list-style: none;
+    margin: calc-rem(-20px) 0 calc-rem(50px);
+
+    &-item {
+        display: inline;
+        font-size: calc-rem(14px);
+        font-weight: bold;
+
+        &.active {
+            a {
+                color: $color-black;
+                pointer-events: none;
+            }
+        }
+
+        &::before {
+            content: '/';
+            display: inline-block;
+            padding: calc-rem(2px);
+            margin: 0 calc-rem(8px);
+        }
+
+        &:first-child {
+            &::before {
+                display: none;
+            }
+        }
+    }
+}

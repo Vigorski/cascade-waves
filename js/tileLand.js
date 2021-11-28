@@ -56,7 +56,7 @@ export default class TileLand {
 		// create root grid parent group
 		// this is used to trigger correct events and acts as an accurate coordinate system
 		const rootGrid = document.createElementNS(this.svg, 'g');
-		rootGrid.setAttribute('class', 'cascase-waves__root-grid');
+		rootGrid.setAttribute('class', 'cascade-waves__root-grid');
 
 		// create tiles wrapper
 		const tilesWrapper = document.createElementNS(this.svg, 'g');
@@ -184,10 +184,10 @@ export default class TileLand {
 
 	activateTile(y, x) {
 		if (!!this.tileState[y] && !!this.tileState[y][x]) {
-			this.tileState[y][x].element.classList.add('active');
+			this.tileState[y][x].element.classList.add('cascade-waves__tile--active');
 			// currently animation is set to 500ms so remove it manually here.
 			// Must remove class with async because intersecting waves cause a glitch and class remains
-			setTimeout(() => this.tileState[y][x].element.classList.remove('active'), 500);
+			setTimeout(() => this.tileState[y][x].element.classList.remove('cascade-waves__tile--active'), 500);
 		}
 	}
 
@@ -196,11 +196,13 @@ export default class TileLand {
 	////////////////////////////////////////////
 
 	addHoverEvent() {
-		const throttleTileDislocate = this.throttle(this.tileDislocate(), 2);
+		const throttleTileDislocate = this.throttle(this.tileDislocate(), 20);
+		const nonThrottleTileDislocate = this.tileDislocate();
 
 		this.baseSVG.addEventListener('mousemove', (e) => {
 			if (!this.hoverEngaged) return;
-			throttleTileDislocate(e, null);
+			// throttleTileDislocate(e, null);
+			nonThrottleTileDislocate(e, null);
 		});
 	}
 
@@ -214,9 +216,8 @@ export default class TileLand {
 
 		return (e, fixed) => {
 			const r = this.hoverRadius;
-			let x,
-				y = null;
-
+			let x, y = null;
+			
 			if (!!e) {
 				// divide by actual tile width (measured in px) in order to get the same coordinate system as baseSVG
 				// tileOffset is the offset of the rect element, so we need it here to recenter the cursor in the middle of the circle
@@ -227,16 +228,16 @@ export default class TileLand {
 			}
 
 			const o = { x: x, y: y };
-
+			
 			for (let x = 0; x <= this.columns; x++) {
 				for (let y = 0; y <= this.columns; y++) {
 					const tilePosition = { x: x, y: y };
 					// check if tile exists, else skip to next tile
 					if (this.tileState[y] === undefined || this.tileState[y][x] === undefined) continue;
-
+					
 					const tileElement = this.tileState[y][x].element;
 					const tileParent = tileElement.parentElement;
-
+					
 					if (this.insideRadius(o, tilePosition, r)) {
 						// define the sides of the triangle made by mouse center and current tile
 						const a = x - o.x;
@@ -255,14 +256,13 @@ export default class TileLand {
 							Math.round(this.colorGray[2] + this.colorThreshold[2] * COLOR_RATE),
 						];
 
-						tileParent.classList.add('hovered');
+						this.tileState[y][x].hovered = true;
 						// by subtracting tile position from event center, we get the correct position for movement on the coordinate system -> a = x - o.x
 						tileElement.setAttribute('style', `transform: translate(${a * PUSH_OFF_RATE}px, ${b * PUSH_OFF_RATE}px) scale(${SCALE_RATE})`);
-
 						tileElement.setAttribute('fill', `rgb(${newColorFill[0]}, ${newColorFill[1]}, ${newColorFill[2]})`);
-					} else if (tileParent.classList.contains('hovered')) {
+					} else if (this.tileState[y][x].hovered) {
 						// back to original tile state
-						tileParent.classList.remove('hovered');
+						this.tileState[y][x].hovered = false;
 						tileElement.setAttribute('style', `transform: scale(1)`);
 						tileElement.setAttribute('fill', '#433e42');
 					}
@@ -289,6 +289,7 @@ export default class TileLand {
 			x: x,
 			y: y,
 			element: rect,
+			hovered: false
 		};
 	}
 
@@ -306,7 +307,6 @@ export default class TileLand {
 	throttle(callback, limit) {
 		let wait = false;
 		const _this = this;
-
 		return function (e) {
 			if (!wait) {
 				callback.call(_this, e);

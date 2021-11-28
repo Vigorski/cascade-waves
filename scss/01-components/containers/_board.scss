@@ -1,0 +1,93 @@
+#boardWrapper {
+  background-color: $color-dark-gray-2;
+}
+
+.cascade-waves {
+  &__tile {
+    position: relative;
+    // fill: $color-dark-gray;
+    // stroke: $color-light-gray;
+    fill: $color-gray-v2  ;
+    stroke: $color-light-gray;
+    z-index: 10;
+ 
+    rect {
+      transition: transform, 0.25s;
+    }
+
+    &--active {
+      z-index: 3;
+      @include transition(fill, .6s);
+      
+      /* animation-name: spin; */
+      animation-name: colors, beat;
+      animation-duration: .5s;
+      animation-timing-function: ease-in-out;
+    }
+  }
+  
+  &__root-grid {
+    fill: transparent;
+  }
+}
+
+@keyframes colors {
+  0% {
+    stroke: $color-light-gray;
+    fill: $color-gray-v2;
+  }
+
+  50% {
+    stroke: $color-purple-3;
+    fill: $color-purple-1;
+  }
+
+  100% {
+    stroke: $color-light-gray;
+    fill: $color-gray-v2;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateX(0);
+  }
+
+  100% {
+    transform: rotateX(180deg);
+  }
+}
+
+@keyframes beat {
+  0% {
+    transform: scale(1);
+  }
+
+  20% {
+    transform: scale(0.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes inverse-beat {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+
+  10% {
+    transform: scale(1);
+  }
+
+  99.9% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}

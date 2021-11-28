@@ -1,0 +1,36 @@
+// MANUAL TEXT COLORS
+@each $name, $color in ($colors) {
+  .text-#{$name} {
+    color: $color;
+  }
+}
+
+p {
+  font: 400 1rem $font-primary;
+  line-height: calc-rem(32px);
+  color: $color-black;
+
+  @include media-breakpoint-down(md) {
+    font-size: calc-rem(14px);
+    line-height: calc-rem(26px);
+  }
+}
+
+// TEXT SIZES
+.text {
+  &-sm {
+    font: 400 calc-rem(14px) $font-primary;
+    line-height: calc-rem(22px);
+  }
+  
+  &-lg {
+    font-size: calc-rem(18px);
+    line-height: calc-rem(32px);
+    font-weight: 400;
+  
+    @include media-breakpoint-down(md) {
+      font-size: calc-rem(16px);
+      line-height: calc-rem(32px);
+    }
+  }
+}

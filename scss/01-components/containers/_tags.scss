@@ -1,0 +1,20 @@
+﻿.tags {
+  li {
+    background-color: $color-tags;
+    color: $color-blue-light-1;
+    border-radius: $border-radius-pill;
+    text-align: center;
+    text-transform: lowercase;
+  }
+
+  &-sm {
+    margin: calc-rem(16px) calc-rem(-4px) 0;
+
+    li {
+      margin: 0 calc-rem(2px);
+      padding: calc-rem(6px) calc-rem(16px);
+      font-size: calc-rem(10px);
+      font-weight: 600;
+    }
+  }
+}

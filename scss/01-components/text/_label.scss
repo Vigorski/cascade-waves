@@ -1,0 +1,8 @@
+label {
+    font-size: calc-rem(12px);
+    line-height: calc-rem(20px);
+    font-weight: 600;
+    color: $color-gray-1;
+    touch-action: manipulation;
+    @include transition(all, .3s);
+}

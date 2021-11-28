@@ -1,0 +1,17 @@
+.avatar {
+    display: inline-block;
+    margin: calc-rem(8px);
+    width: $avatar-base;
+    height: $avatar-base;
+    border-radius: 50%;
+    vertical-align: middle;
+
+    @each $name,
+    $size in ($avatars) {
+
+        &.avatar-#{$name} {
+            width: $size;
+            height: $size;
+        }
+    }
+}

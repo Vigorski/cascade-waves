@@ -1,0 +1,28 @@
+//BOOTSTRAP TABS
+.nav {
+    &-tabs {
+        display: flex;
+        align-items: center;
+        margin: 0 calc-rem(-5px) calc-rem(70px);
+    }
+
+    &-item {
+        flex: 1;
+        max-width: 25%;
+        margin: 0 calc-rem(5px);
+    }
+
+    &-link {
+        width: 100%;
+        color: $color-secondary;
+        padding-bottom: calc-rem(16px);
+        border-bottom: 8px solid $color-brown;
+        font-size: calc-rem(16px);
+        font-weight: 700;
+
+        &.active {
+            color: $color-primary;
+            border-color: $color-primary;
+        }
+    }
+}

@@ -1,77 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tile Land</title>
-  <link rel="stylesheet" href="css/app.css">
-  <script src="js/app.js" type="module"></script>
-</head>
-<body>
-  <aside class="controls">
-    <fieldset>
-      <legend>Board settings</legend>
-      <div class="controls__group">
-        <label for="boardColumns">Number of Columns</label>
-        <input type="number" value="20" min="5" max="100" id="boardColumns" />
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>Hover settings</legend>
-      <div class="controls__group">
-        <input type="checkbox" id="engageHover" />
-        <label for="engageHover">Allow hover</label>
-      </div>
-      <div class="controls__group">
-        <label for="hoverRadius">Hover radius</label>
-        <input type="range" value="3.6" id="hoverRadius" name="hoverRadius"
-         min="2" max="10" step="0.5">
-         <span class="controls__indicator">3.6</span>
-      </div>
-      <div class="controls__group">
-        <label for="dislocateStart">Tile dislocation starting value</label>
-        <input type="range" value="0.1" id="dislocateStart" name="dislocateRate"
-         min="-1" max="2" step="0.05">
-         <span class="controls__indicator">0.1</span>
-      </div>
-      <div class="controls__group">
-        <label for="dislocateDecay">Tile dislocation decay value</label>
-        <input type="range" value="0.6" id="dislocateDecay" name="dislocateRate"
-         min="0" max="0.95" step="0.05">
-         <span class="controls__indicator">0.6</span>
-      </div>
-      <div class="controls__group">
-        <label for="tileSizeStart">Tile size starting value</label>
-        <input type="range" value="1" id="tileSizeStart" name="dislocateRate"
-         min="0.2" max="5" step="0.1">
-         <span class="controls__indicator">1</span>
-      </div>
-      <div class="controls__group">
-        <label for="tileSizeDecay">Tile size decay value</label>
-        <input type="range" value="0.4" id="tileSizeDecay" name="dislocateRate"
-         min="-0.5" max="0.95" step="0.05">
-         <span class="controls__indicator">0.4</span>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>Wave settings</legend>
-      <div class="controls__group">
-        <label for="waveSpeed">Wave speed</label>
-        <input type="range" value="0.6" min="0.2" max="0.7" step="0.1" id="waveSpeed" />
-        <span class="controls__indicator">0.6</span>
-      </div>
-      <div class="controls__group">
-        <input type="checkbox" value="3" id="tileWidth" />
-        <label for="tileWidth">Super wave?</label>
-      </div>
-    </fieldset>
-    <button type="button" id="reset">Reset settings</button>
-  </aside>
-  
-  <main>
-    <h1>Click on any field</h1>
-    <div id="container"></div>
-  </main>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tile Land</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="css/app.css" />
+		<script src="js/app.js" type="module"></script>
+	</head>
+	<body>
+		<div class="playground__wrapper">
+			<div class="container">
+				<h1>Tile Land</h1>
+				<section class="playground">
+					<div class="row">
+						<div class="col-5">
+							<aside class="controls">
+								<fieldset>
+									<legend>Board settings</legend>
+									<div class="form__group">
+										<label for="boardColumns">Number of Columns</label>
+										<input type="number" value="20" min="5" max="40" id="boardColumns" />
+										<span class="form__field-error"></span>
+									</div>
+								</fieldset>
+								<fieldset>
+									<legend>Hover settings</legend>
+									<div class="form__field-checkbox">
+										<input type="checkbox" id="engageHover" />
+										<label for="engageHover">Allow hover</label>
+									</div>
+									<div class="form__field-range">
+										<label for="hoverRadius">Hover radius</label>
+										<input type="range" value="3.6" id="hoverRadius" name="hoverRadius" min="2" max="5" step="0.25" />
+										<span class="form__indicator">3.6</span>
+									</div>
+									<div class="form__field-range">
+										<label for="dislocateStart">Push start</label>
+										<input type="range" value="0.1" id="dislocateStart" name="dislocateRate" min="-1" max="2" step="0.05" />
+										<span class="form__indicator">0.1</span>
+									</div>
+									<div class="form__field-range">
+										<label for="dislocateDecay">Push decay</label>
+										<input type="range" value="0.6" id="dislocateDecay" name="dislocateRate" min="0" max="0.95" step="0.05" />
+										<span class="form__indicator">0.6</span>
+									</div>
+									<div class="form__field-range">
+										<label for="tileSizeStart">Size start</label>
+										<input type="range" value="1" id="tileSizeStart" name="dislocateRate" min="0.2" max="5" step="0.1" />
+										<span class="form__indicator">1</span>
+									</div>
+									<div class="form__field-range">
+										<label for="tileSizeDecay">Size decay</label>
+										<input type="range" value="0.4" id="tileSizeDecay" name="dislocateRate" min="-0.5" max="0.95" step="0.05" />
+										<span class="form__indicator">0.4</span>
+									</div>
+								</fieldset>
+								<fieldset>
+									<legend>Wave settings</legend>
+									<div class="form__field-range">
+										<label for="waveSpeed">Wave speed</label>
+										<input type="range" value="0.6" min="0.2" max="0.7" step="0.1" id="waveSpeed" />
+										<span class="form__indicator">0.6</span>
+									</div>
+									<div class="form__field-checkbox">
+										<input type="checkbox" value="3" id="tileWidth" />
+										<label for="tileWidth">Super wave?</label>
+									</div>
+									<button class="btn btn-primary-gradient btn-block" type="button" id="reset">Reset settings</button>
+								</fieldset>
+							</aside>
+						</div>
+						<div class="col-7">
+							<main>
+								<div id="boardWrapper"></div>
+							</main>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</body>
 </html>

@@ -10,21 +10,6 @@ function onRangeChange(ele, obj, property) {
   });
 }
 
-
-function onBoardChange(ele, obj, property) {
-	ele.addEventListener('change', e => {
-		const val = Number(e.target.value);
-		if(property === 'tileWidth' && e.target.checked === false) {
-			obj[property] = 1;
-		} else {
-			obj[property] = val;
-			toggleHover(false);
-		}
-		
-		obj.resetBoard();
-  });
-}
-
 function toggleHover(state) {
 	engageHover.checked = state
 	initTileLand.hoverEngaged = state;
@@ -51,16 +36,28 @@ const options = {
 	scaleExpDecay: 0.4,
 };
 
-const container = document.getElementById('container');
-const initTileLand = new TileLand(container, options);
+const boardWrapper = document.getElementById('boardWrapper');
+const initTileLand = new TileLand(boardWrapper, options);
 
 // Board settings
 const boardColumns = document.getElementById('boardColumns');
-onBoardChange(boardColumns, initTileLand, 'columns');
+boardColumns.addEventListener('change', e => {
+	const val = Number(e.target.value);
+	const indicator = e.target.nextElementSibling;
+
+	if(val > 40) {
+		indicator.innerHTML = 'Are you trying to melt your CPU? <small>(Max value is 40)</small>'
+	} else if(val < 5) {
+		indicator.innerHTML = 'Yeah... No. (Min value is 5)';
+	} else {
+		initTileLand.columns = val;
+		toggleHover(false);
+		initTileLand.resetBoard();
+	}
+})
 
 
 // Hover Events
-// #TODO turn on/off hover
 const engageHover = document.getElementById('engageHover');
 const hoverRadius = document.getElementById('hoverRadius');
 const dislocateStart = document.getElementById('dislocateStart');
@@ -88,7 +85,16 @@ const waveSpeed = document.getElementById('waveSpeed');
 const tileWidth = document.getElementById('tileWidth');
 
 onRangeChange(waveSpeed, initTileLand, 'waveIncrement');
-onBoardChange(tileWidth, initTileLand, 'tileWidth');
+tileWidth.addEventListener('change', e => {
+	if(e.target.checked === false) {
+		initTileLand.tileWidth = 1;
+	} else {
+		initTileLand.tileWidth = 3;
+		toggleHover(false);
+	}
+	
+	initTileLand.resetBoard();
+});
 
 // reset settings
 const reset = document.getElementById('reset');

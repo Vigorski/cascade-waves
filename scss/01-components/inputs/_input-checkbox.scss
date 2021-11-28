@@ -1,0 +1,36 @@
+// Checkbox
+.form__field-checkbox {
+  @include radio-checkbox($checkbox-width, $border-radius-sm);
+  margin: calc-rem(10px) 0;
+
+  input[type="checkbox"] + label {
+    z-index: 0;
+
+    &::before {
+      width: math.div($checkbox-width, $checkbox-tick-base);
+      height: math.div($checkbox-width, ($checkbox-tick-base * $checkbox-aspect-ratio));
+      left: calc-rem(5px);
+      top: calc(50% - 2px);
+      transform: translateY(-50%) rotate(-45deg) scale(0, 0);
+      border: 3px solid $color-secondary;
+      border-top-style: none;
+      border-right-style: none;
+    }
+  }
+
+  input[type="checkbox"] {
+    min-width: initial;
+
+    &:checked + label::before {
+      transform: translateY(-50%) rotate(-45deg) scale(1, 1);
+    }
+
+    &:checked + label::after {
+      border-color: $border-color;
+    }
+
+    &:disabled + label::after {
+      background-color: lighten($color-gray, 26%);
+    }
+  }
+}
