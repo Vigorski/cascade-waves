@@ -1,63 +1,16 @@
 @use "sass:math";
 
-@import 
-    "utilities/background",
-    "utilities/white-space";
-
 @import
-    "containers/cookies",
-    "containers/list",
-    "containers/table",
-    "containers/tags",
     "containers/board";
-
-@import
-    "content/icon",
-    "content/loader",
-    "content/separator";
-
-@import 
-    "cards/card";
 
 @import 
     "inputs/input-global",
     "inputs/button",
-    "inputs/button-menu",
     "inputs/input-checkbox",
-    "inputs/input-date-time",
-    "inputs/input-radio",
-    "inputs/input-search",
-    "inputs/input-select",
     "inputs/input-text",
-    "inputs/input-textarea",
-    "inputs/input-upload",
-    "inputs/input-file",
     "inputs/input-range";
-
-@import 
-    "interactive/accordion",
-    "interactive/breadcrumb",
-    "interactive/modal",
-    "interactive/pagination",
-    "interactive/progressbar",
-    "interactive/slider",
-    "interactive/tab",
-    "interactive/toast-message",
-    "interactive/video",
-    "interactive/wysiwyg",
-    "interactive/popover",
-    'interactive/tooltip',
-    "interactive/step-progressbar",
-    "interactive/loader";
 
 @import 
     "text/heading",
     "text/label",
-    "text/text",
-    "text/message",
-    "text/link";
-
-@import 
-    "images/avatar",
-    "images/thumbnail",
-    "images/image";
+    "text/text";

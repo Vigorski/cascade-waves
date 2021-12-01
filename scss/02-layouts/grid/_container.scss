@@ -2,7 +2,3 @@
     @include make-container();
     max-width: get-variable("xxl", $container-max-widths);
 }
-
-.container-fluid {
-  @include make-container();
-}

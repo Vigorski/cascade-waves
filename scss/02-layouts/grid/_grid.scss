@@ -3,19 +3,5 @@
   @include make-row();
 }
 
-.gutters {
-  @each $gutter, $size in $grid-gutter-additional {
-    &-#{$gutter} {
-      @include change-gutters($size);
-    }
-  }
-}
-
-// Remove the negative margin from default .row, then the horizontal padding
-// from all immediate children columns (to prevent runaway style inheritance).
-.no-gutters {
-  @include change-gutters(0);
-}
-
 //Called mixin to create row
 @include make-grid-columns();

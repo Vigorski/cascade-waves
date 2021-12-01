@@ -11,33 +11,6 @@
   border-radius: $border-radius-md;
   text-transform: uppercase;
 
-  &-primary,
-  &-secondary,
-  &-tertiary,
-  &-tertiary-ghost {
-    @extend .btn;
-  }
-
-  &-primary {
-    @include base-button($color-white, $color-secondary);
-  }
-
-  &-secondary {
-    @include base-button($color-secondary, $color-primary);
-  }
-
-  &-tertiary {
-    @include base-button($color-white, $color-blue-light-1);
-
-    &-ghost {
-      @include base-button(
-        $color-blue-light-1,
-        $color-white,
-        $color-blue-light-1
-      );
-    }
-  }
-
   &-primary-gradient {
     @include base-button($color-white, $color-secondary, transparent);
     background: linear-gradient(90deg, #4f207a 0%, desaturate($color-purple-1, 11%) 100%);
@@ -46,52 +19,5 @@
 
   &-block {
     width: 100%;
-  }
-
-  &-stripped {
-    @include base-button($color-secondary);
-    color: $color-secondary;
-    display: inline-block;
-    font-size: calc-rem(14px);
-    font-weight: 700;
-  }
-}
-
-// based on size
-.btn {
-  &-sm {
-    font-size: $btn-font-sm;
-    min-height: $btn-height-sm;
-    padding: $btn-padding-sm;
-  }
-
-  &-lg {
-    min-height: $btn-height-lg;
-    padding: $btn-padding-lg;
-  }
-}
-
-// button with icon
-.btn-icon {
-  &-left {
-    margin-left: $btn-icon-margin;
-
-    i {
-      margin-right: $btn-icon-spacing;
-    }
-  }
-
-  &-right {
-    margin-right: $btn-icon-margin;
-
-    i {
-      margin-left: $btn-icon-spacing;
-    }
-  }
-
-  &-center {
-    display: flex;
-    align-items: center;
-    padding: 1.5rem;
   }
 }
