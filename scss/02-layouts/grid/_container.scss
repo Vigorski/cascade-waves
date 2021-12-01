@@ -1,6 +1,6 @@
 .container {
     @include make-container();
-    max-width: get-variable("xl", $container-max-widths);
+    max-width: get-variable("xxl", $container-max-widths);
 }
 
 .container-fluid {

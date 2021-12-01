@@ -96,7 +96,7 @@
 			width: $box-width;
 			height: $box-width;
 			background-color: transparent;
-			border: 2px solid $color-gray-2;
+			border: 3px solid $color-gray-2;
 			@include transition(all, 0.25s);
 		}
 	}
@@ -132,7 +132,7 @@
 }
 
 @mixin thumb {
-  @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
+  //@include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
   background: $thumb-color;
   border: $thumb-border-width solid $thumb-border-color;
   border-radius: $thumb-radius;

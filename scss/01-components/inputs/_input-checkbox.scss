@@ -10,9 +10,9 @@
       width: math.div($checkbox-width, $checkbox-tick-base);
       height: math.div($checkbox-width, ($checkbox-tick-base * $checkbox-aspect-ratio));
       left: calc-rem(5px);
-      top: calc(50% - 2px);
+      top: calc(50% - 1.5px);
       transform: translateY(-50%) rotate(-45deg) scale(0, 0);
-      border: 3px solid $color-secondary;
+      border: 3px solid $color-primary;
       border-top-style: none;
       border-right-style: none;
     }
@@ -26,7 +26,7 @@
     }
 
     &:checked + label::after {
-      border-color: $border-color;
+      border-color: $color-primary;
     }
 
     &:disabled + label::after {
