@@ -1,7 +1,0 @@
-//Create row
-.row {
-  @include make-row();
-}
-
-//Called mixin to create row
-@include make-grid-columns();
