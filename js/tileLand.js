@@ -196,13 +196,12 @@ export default class TileLand {
 	////////////////////////////////////////////
 
 	addHoverEvent() {
-		const throttleTileDislocate = this.throttle(this.tileDislocate(), 20);
-		const nonThrottleTileDislocate = this.tileDislocate();
+		const regularTileDislocate = this.tileDislocate();
 
 		this.baseSVG.addEventListener('mousemove', (e) => {
 			if (!this.hoverEngaged) return;
 			// throttleTileDislocate(e, null);
-			nonThrottleTileDislocate(e, null);
+			regularTileDislocate(e, null);
 		});
 	}
 
@@ -304,12 +303,23 @@ export default class TileLand {
 		return angle * (Math.PI / 180);
 	}
 
+	debounce (func, limit) {
+		let lastFunc;
+		const context = this;
+		return function(...args) {
+			clearTimeout(lastFunc);
+			lastFunc = setTimeout(() => {
+				func.apply(context, args)
+			}, limit);
+		}
+	}
+
 	throttle(callback, limit) {
 		let wait = false;
-		const _this = this;
+		const context = this;
 		return function (e) {
 			if (!wait) {
-				callback.call(_this, e);
+				callback.call(context, e);
 				wait = true;
 
 				setTimeout(function () {

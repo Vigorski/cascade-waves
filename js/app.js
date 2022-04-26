@@ -19,7 +19,6 @@ function toggleHover(state) {
 function removeSuperWave() {
 	initTileLand.tileWidth = 1;
 	tileWidth.checked = false;
-	initTileLand.resetBoard();
 }
 
 const options = {
@@ -77,6 +76,7 @@ engageHover.addEventListener('change', e => {
 	initTileLand.hoverUpdate(checked);
 	if (tileWidth.checked === true) {
 		removeSuperWave();
+		initTileLand.resetBoard();
 	}
 });
 
@@ -99,16 +99,7 @@ tileWidth.addEventListener('change', e => {
 // reset settings
 const reset = document.getElementById('reset');
 reset.addEventListener('click', e => {
-	initTileLand.columns = 20;
-  initTileLand.hoverEngaged = false;
-	initTileLand.hoverRadius = 3.6;
-	initTileLand.pushoffExpInitial = 0.1;
-	initTileLand.pushoffExpDecay = 0.6;
-	initTileLand.scaleExpInitial = 1;
-	initTileLand.scaleExpDecay = 0.4;
-	initTileLand.waveIncrement = 0.6;
-	initTileLand.tileWidth = 1;
-
+	// reset inputs
 	boardColumns.value = 20;
 	engageHover.checked = false;
 	hoverRadius.value = 3.6;
@@ -119,7 +110,26 @@ reset.addEventListener('click', e => {
 	waveSpeed.value = 0.6;
 	tileWidth.checked = false;
 
+	// reset tile board
+	initTileLand.columns = 20;
+  initTileLand.hoverEngaged = false;
+	initTileLand.hoverRadius = 3.6;
+	initTileLand.pushoffExpInitial = 0.1;
+	initTileLand.pushoffExpDecay = 0.6;
+	initTileLand.scaleExpInitial = 1;
+	initTileLand.scaleExpDecay = 0.4;
+	initTileLand.waveIncrement = 0.6;
+	initTileLand.tileWidth = 1;
 	initTileLand.resetBoard();
 	removeSuperWave();
 	toggleHover(false);
 });
+
+// Window resize
+if (initTileLand) {
+	const throttledResetTileLand = initTileLand.debounce(initTileLand.resetBoard, 500);
+
+	window.addEventListener('resize', () => {
+		throttledResetTileLand();
+	});
+}
